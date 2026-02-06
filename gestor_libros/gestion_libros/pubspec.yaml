@@ -1,0 +1,37 @@
+name: gestion_libros
+description: "A new Flutter project for LibriDex."
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.9.2
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.8
+  
+  # Dependencia para las peticiones a la API de Google Books
+  http: ^1.1.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0
+
+flutter:
+  uses-material-design: true
+
+  # Registro de Assets
+  assets:
+    - images/logo.png
+    # Si vas a usar más imágenes en el futuro, puedes añadir la carpeta completa:
+    # - assets/images/
+
+  # Si decides usar una fuente con serifa externa (como 'Playfair Display') 
+  # para que se vea igual que en los diseños, la registrarías aquí:
+  # fonts:
+  #   - family: SerifCustom
+  #     fonts:
+  #       - asset: assets/fonts/TuFuente-Regular.ttf
