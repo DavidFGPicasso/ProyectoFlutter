@@ -35,7 +35,7 @@ class MyBooksScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Contenedor para la portada del libro.-
+                // Contenedor para la portada del libro.
                 Expanded(
                   child: Container(
                     decoration: BoxDecoration(

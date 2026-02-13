@@ -93,7 +93,7 @@ class HomeScreen extends StatelessWidget {
       ),
     );
   }
-  // Funcón para las opciones del menú.
+  // Función para las opciones del menú.
   Widget _drawerTile(BuildContext context, IconData icon, String title, String route, Color color) {
     return ListTile(
       leading: Icon(icon, color: color), 

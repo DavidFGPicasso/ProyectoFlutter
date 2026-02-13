@@ -5,15 +5,23 @@ publish_to: 'none'
 version: 1.0.0+1
 
 environment:
-  sdk: ^3.9.2
+  sdk: ^3.5.0
 
 dependencies:
   flutter:
     sdk: flutter
   cupertino_icons: ^1.0.8
   
-  # Dependencia para las peticiones a la API de Google Books
-  http: ^1.1.0
+  # --- CONECTIVIDAD Y API ---
+  # Para buscar libros en Google Books
+  http: ^1.2.0
+  
+  # --- FIREBASE ---
+  # Core, Autenticación y Base de Datos (Firestore)
+  firebase_core: ^3.10.1
+  firebase_auth: ^5.4.1
+  cloud_firestore: ^5.6.1
+  provider: ^6.1.5+1
 
 dev_dependencies:
   flutter_test:
@@ -23,15 +31,6 @@ dev_dependencies:
 flutter:
   uses-material-design: true
 
-  # Registro de Assets
+  # Registro de Assets (Imágenes del proyecto)
   assets:
     - images/logo.png
-    # Si vas a usar más imágenes en el futuro, puedes añadir la carpeta completa:
-    # - assets/images/
-
-  # Si decides usar una fuente con serifa externa (como 'Playfair Display') 
-  # para que se vea igual que en los diseños, la registrarías aquí:
-  # fonts:
-  #   - family: SerifCustom
-  #     fonts:
-  #       - asset: assets/fonts/TuFuente-Regular.ttf

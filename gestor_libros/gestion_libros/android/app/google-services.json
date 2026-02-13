@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "539182045830",
+    "project_id": "proyectoflutter-8e579",
+    "storage_bucket": "proyectoflutter-8e579.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:539182045830:android:05f8b3630fcf1c16f68f07",
+        "android_client_info": {
+          "package_name": "com.example.gestion_libros"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDSfA8dziMj2WtwBfPQgAIYe3YPs_aCbEU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

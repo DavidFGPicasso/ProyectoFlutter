@@ -16,14 +16,14 @@ class BookDetailsScreen extends StatelessWidget {
         backgroundColor: Colors.transparent, 
         elevation: 0,
       ),
-      // SingleChildScrollView para hacer scroll si hay mucho contenido.
+    
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(20.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // Contenedor para la portada del libro.
-            Center( // Centramos solo la imagen
+            Center( 
               child: Container(
                 height: 220,
                 width: 150,
