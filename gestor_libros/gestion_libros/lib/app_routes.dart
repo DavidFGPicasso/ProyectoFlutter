@@ -35,6 +35,7 @@ class AppRoutes {
       settings: (context) => const SettingsScreen(),
       credits: (context) => const CreditsScreen(),
       recommended: (context) => const RecommendedBooksScreen(),
+      //
     };
   }
 }
