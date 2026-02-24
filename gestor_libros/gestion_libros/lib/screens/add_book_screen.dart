@@ -10,8 +10,14 @@ class BookModel {
   final String title;
   final String authors;
   final String thumbnail;
+  final String description;
 
-  BookModel({required this.title, required this.authors, required this.thumbnail});
+  BookModel({
+    required this.title, 
+    required this.authors, 
+    required this.thumbnail,
+    required this.description,
+  });
 
   factory BookModel.fromJson(Map<String, dynamic> json) {
     final info = json['volumeInfo'];
@@ -24,6 +30,7 @@ class BookModel {
       title: info['title'] ?? 'Sin título',
       authors: (info['authors'] as List?)?.join(', ') ?? 'Autor desconocido',
       thumbnail: img,
+      description: info['description'] ?? 'No description available.',
     );
   }
 }
@@ -46,6 +53,9 @@ class _AddBookScreenState extends State<AddBookScreen> {
 
   final Color mainColor = const Color(0xFFB73BB7);
 
+  // API Key de Google Books
+  static const String apiKey = 'AIzaSyC_q9uk3EbCmsbZAleJLoFha1TAWlXQFcU';
+
   // 1. Buscamos en Google Books API
   Future<void> _searchBooks(String query) async {
     if (query.isEmpty) return;
@@ -56,19 +66,26 @@ class _AddBookScreenState extends State<AddBookScreen> {
       _selectedBook = null; 
     });
 
-    final url = Uri.parse('https://www.googleapis.com/books/v1/volumes?q=$query&maxResults=10');
+    final url = Uri.https('www.googleapis.com', '/books/v1/volumes', {
+      'q': query,
+      'maxResults': '10',
+      'key': apiKey,
+    });
 
     try {
       final response = await http.get(url);
+      
       if (response.statusCode == 200) {
         final data = json.decode(response.body);
         final List items = data['items'] ?? [];
         setState(() {
           _searchResults = items.map((i) => BookModel.fromJson(i)).toList();
         });
+      } else {
+        _showSnackBar('Error HTTP: ${response.statusCode}');
       }
     } catch (e) {
-      _showSnackBar('Error de conexión con Google Books');
+      _showSnackBar('Error de conexión con Google Books: $e');
     } finally {
       setState(() => _isLoading = false);
     }
@@ -96,6 +113,7 @@ class _AddBookScreenState extends State<AddBookScreen> {
         'title': _selectedBook!.title,
         'author': _selectedBook!.authors,
         'thumbnail': _selectedBook!.thumbnail,
+        'description': _selectedBook!.description,
         'isFinished': _isFinished,
         // Fecha exacta del servidor
         'addedAt': FieldValue.serverTimestamp(), 

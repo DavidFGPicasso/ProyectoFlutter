@@ -3,13 +3,18 @@ import 'package:http/http.dart' as http;
 import 'book_model.dart';
 
 class GoogleBooksService {
+  // API Key de Google Books
+  static const String apiKey = 'AIzaSyC_q9uk3EbCmsbZAleJLoFha1TAWlXQFcU';
+
   Future<List<BookModel>> searchBooks(String query) async {
     if (query.isEmpty) return [];
 
-    // URL pública de Google Books
-    final url = Uri.parse(
-      'https://www.googleapis.com/books/v1/volumes?q=${query.trim()}&maxResults=15'
-    );
+    // URL de Google Books con API Key
+    final url = Uri.https('www.googleapis.com', '/books/v1/volumes', {
+      'q': query.trim(),
+      'maxResults': '15',
+      'key': apiKey,
+    });
 
     try {
       final response = await http.get(url);
@@ -22,7 +27,7 @@ class GoogleBooksService {
         return [];
       }
     } catch (e) {
-  return [];
-}
+      return [];
+    }
   }
 }

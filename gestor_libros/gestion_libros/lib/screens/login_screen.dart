@@ -43,7 +43,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
       // Navegar a la pantalla principal si el login es exitoso.
       if (mounted) {
-        Navigator.pushReplacementNamed(context, '/home');
+        Navigator.pushReplacementNamed(context, '/my-books');
       }
     } on FirebaseAuthException catch (e) {
       // Gestión de errores.
