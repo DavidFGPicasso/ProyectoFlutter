@@ -54,7 +54,7 @@ class _AddBookScreenState extends State<AddBookScreen> {
   final Color mainColor = const Color(0xFFB73BB7);
 
   // API Key de Google Books
-  static const String apiKey = 'AIzaSyC_q9uk3EbCmsbZAleJLoFha1TAWlXQFcU';
+  static const String apiKey = String.fromEnvironment('GOOGLE_BOOKS_API_KEY');
 
   // 1. Buscamos en Google Books API
   Future<void> _searchBooks(String query) async {
@@ -69,7 +69,7 @@ class _AddBookScreenState extends State<AddBookScreen> {
     final url = Uri.https('www.googleapis.com', '/books/v1/volumes', {
       'q': query,
       'maxResults': '10',
-      'key': apiKey,
+      if (apiKey.isNotEmpty) 'key': apiKey,
     });
 
     try {
