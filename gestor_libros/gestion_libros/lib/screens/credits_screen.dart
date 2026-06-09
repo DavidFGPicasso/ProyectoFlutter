@@ -32,7 +32,7 @@ class CreditsScreen extends StatelessWidget {
             
           // Datos de la app.
             _buildCreditTile(mainColor, Icons.info_outline, 'Version', '1.0.0 (Stable)'),
-            _buildCreditTile(mainColor, Icons.code, 'Developed by', 'LibriDex Team'),
+            _buildCreditTile(mainColor, Icons.code, 'Developed by', 'David Flores Gutiérrez'),
             _buildCreditTile(mainColor, Icons.favorite_border, 'Special Thanks', 'To the Flutter Community'),
             
             const SizedBox(height: 50),

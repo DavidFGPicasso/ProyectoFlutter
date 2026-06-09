@@ -31,6 +31,13 @@ subprojects {
     project.evaluationDependsOn(":app")
 }
 
+// Aplicar flags del compilador Java a todos los subproyectos (plugins incluidos)
+subprojects {
+    tasks.withType<JavaCompile> {
+        options.compilerArgs.addAll(listOf("-Xlint:-unchecked", "-Xlint:-deprecation"))
+    }
+}
+
 tasks.register<Delete>("clean") {
     delete(rootProject.layout.buildDirectory)
 }

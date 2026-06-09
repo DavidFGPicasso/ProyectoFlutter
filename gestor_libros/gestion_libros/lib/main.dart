@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart'; 
-import 'package:provider/provider.dart';
 import 'app_routes.dart';
-import 'model/theme_provider.dart'; 
 
 
 void main() async {
@@ -11,21 +9,43 @@ void main() async {
   // Inicializamos Firebase
   await Firebase.initializeApp();
 
-  runApp(
-    ChangeNotifierProvider(
-      create: (context) => ThemeProvider(),
-      child: const LibriDexApp(),
-    ),
-  );
+  runApp(const LibriDexApp());
 }
 
-class LibriDexApp extends StatelessWidget {
+class LibriDexApp extends StatefulWidget {
   const LibriDexApp({super.key});
 
   @override
+  State<LibriDexApp> createState() => _LibriDexAppState();
+}
+
+class _LibriDexAppState extends State<LibriDexApp> {
+  ThemeMode _themeMode = ThemeMode.light;
+
+  late final ValueNotifier<bool> _themeNotifier;
+
+  bool get _isDarkMode => _themeMode == ThemeMode.dark;
+
+  @override
+  void initState() {
+    super.initState();
+    _themeNotifier = ValueNotifier<bool>(_isDarkMode);
+    _themeNotifier.addListener(() {
+      setState(() {
+        _themeMode = _themeNotifier.value ? ThemeMode.dark : ThemeMode.light;
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    _themeNotifier.removeListener(() {});
+    _themeNotifier.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    // Obtenemos el estado del tema
-    final themeProvider = Provider.of<ThemeProvider>(context);
     const Color mainColor = Color(0xFFB73BB7);
 
     return MaterialApp(
@@ -33,7 +53,7 @@ class LibriDexApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       
       // Modo Oscuro.
-      themeMode: themeProvider.themeMode, 
+      themeMode: _themeMode,
       
       theme: ThemeData(
         useMaterial3: true,
@@ -48,7 +68,9 @@ class LibriDexApp extends StatelessWidget {
       ),
 
       initialRoute: AppRoutes.splash,
-      routes: AppRoutes.getRoutes(),
+      routes: AppRoutes.getRoutes(
+        themeNotifier: _themeNotifier,
+      ),
     );
   }
 }

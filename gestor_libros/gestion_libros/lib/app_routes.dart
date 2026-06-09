@@ -22,14 +22,18 @@ class AppRoutes {
   static const String recommended = '/recommended';
 
   // El mapa de las rutas. 
-  static Map<String, WidgetBuilder> getRoutes() {
+  static Map<String, WidgetBuilder> getRoutes({
+    required ValueNotifier<bool> themeNotifier,
+  }) {
     return {
       splash: (context) => const SplashScreen(),
       login: (context) => const LoginScreen(),
       myBooks: (context) => const MyBooksScreen(),
       bookDetails: (context) => const BookDetailsScreen(),
       addBook: (context) => const AddBookScreen(), 
-      settings: (context) => const SettingsScreen(),
+      settings: (context) => SettingsScreen(
+        themeNotifier: themeNotifier,
+      ),
       credits: (context) => const CreditsScreen(),
       recommended: (context) => const RecommendedBooksScreen(),
       //

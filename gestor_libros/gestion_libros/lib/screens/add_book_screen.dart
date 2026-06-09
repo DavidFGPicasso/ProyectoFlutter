@@ -143,6 +143,12 @@ class _AddBookScreenState extends State<AddBookScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+    final contentTextColor = isDarkMode ? Colors.white : Colors.black87;
+    final secondaryTextColor = isDarkMode ? Colors.white70 : Colors.black54;
+    final cardColor = isDarkMode ? colorScheme.surfaceContainerHigh : Colors.grey.shade50;
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Add New Book', style: TextStyle(fontWeight: FontWeight.bold)),
@@ -158,13 +164,17 @@ class _AddBookScreenState extends State<AddBookScreen> {
             TextField(
               controller: _searchController,
               onSubmitted: (value) => _searchBooks(value),
+              style: TextStyle(color: contentTextColor),
               decoration: InputDecoration(
                 hintText: 'Search by Title or Author',
+                hintStyle: TextStyle(color: secondaryTextColor),
                 prefixIcon: Icon(Icons.search, color: mainColor),
                 suffixIcon: IconButton(
                   icon: Icon(Icons.send, color: mainColor),
                   onPressed: () => _searchBooks(_searchController.text),
                 ),
+                filled: isDarkMode,
+                fillColor: isDarkMode ? colorScheme.surfaceContainerHighest : null,
                 focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: mainColor, width: 2)),
               ),
             ),
@@ -176,7 +186,7 @@ class _AddBookScreenState extends State<AddBookScreen> {
               child: _isLoading && _searchResults.isEmpty
                   ? Center(child: CircularProgressIndicator(color: mainColor))
                   : _searchResults.isEmpty
-                      ? Center(child: Text('Results will appear here', style: TextStyle(color: mainColor.withValues(alpha: 0.5))))
+                      ? Center(child: Text('Results will appear here', style: TextStyle(color: secondaryTextColor)))
                       : ListView.builder(
                           itemCount: _searchResults.length,
                           itemBuilder: (context, index) {
@@ -185,7 +195,7 @@ class _AddBookScreenState extends State<AddBookScreen> {
 
                             return Card(
                               elevation: isSelected ? 4 : 0,
-                              color: isSelected ? mainColor.withValues(alpha: 0.15) : Colors.grey.shade50,
+                              color: isSelected ? mainColor.withValues(alpha: 0.15) : cardColor,
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10),
                                 side: BorderSide(color: isSelected ? mainColor : Colors.transparent),
@@ -194,8 +204,8 @@ class _AddBookScreenState extends State<AddBookScreen> {
                                 leading: book.thumbnail.isNotEmpty
                                     ? Image.network(book.thumbnail, width: 40, fit: BoxFit.cover)
                                     : Icon(Icons.book, color: mainColor),
-                                title: Text(book.title, style: const TextStyle(fontWeight: FontWeight.bold)),
-                                subtitle: Text(book.authors),
+                                title: Text(book.title, style: TextStyle(fontWeight: FontWeight.bold, color: contentTextColor)),
+                                subtitle: Text(book.authors, style: TextStyle(color: secondaryTextColor)),
                                 trailing: isSelected ? Icon(Icons.check_circle, color: mainColor) : null,
                                 onTap: () => setState(() => _selectedBook = book),
                               ),
@@ -209,7 +219,7 @@ class _AddBookScreenState extends State<AddBookScreen> {
             // Botón de marcar como leído.
             SwitchListTile(
               contentPadding: EdgeInsets.zero,
-              title: Text('Finished reading?', style: TextStyle(color: mainColor, fontWeight: FontWeight.w500)),
+              title: Text('Finished reading?', style: TextStyle(color: contentTextColor, fontWeight: FontWeight.w500)),
               activeThumbColor: mainColor,
               value: _isFinished,
               onChanged: (val) => setState(() => _isFinished = val),

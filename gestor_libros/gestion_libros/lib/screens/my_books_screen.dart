@@ -45,10 +45,15 @@ class MyBooksScreen extends StatelessWidget {
 
                 // Si hay error
                 if (snapshot.hasError) {
+                  debugPrint('MyBooks Firestore error: ${snapshot.error}');
                   return Center(
-                    child: Text(
-                      'Error loading books',
-                      style: TextStyle(color: Colors.red, fontSize: 16),
+                    child: Padding(
+                      padding: const EdgeInsets.all(24.0),
+                      child: Text(
+                        'Error loading books\n${snapshot.error}',
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(color: Colors.red, fontSize: 16),
+                      ),
                     ),
                   );
                 }
